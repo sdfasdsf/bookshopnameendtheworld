@@ -1,0 +1,148 @@
+
+
+-- ȸ�� ���̺� ����
+drop sequence readsq ;
+
+create sequence readsq  
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+ 
+drop table readers purge ;
+create table readers(
+	no number primary key,
+	name varchar2(30) not null,
+	id varchar2(12) not null,
+	password varchar2(12),
+	rrn1 varchar2(10),
+	rrn2 varchar2(10),
+	email varchar2(20),
+	hp1 varchar2(10),
+	hp2 varchar2(10),
+	hp3 varchar2(20),
+	joindate varchar2(20) 				
+	readmannumber varchar2(10),
+);
+
+insert into readers(no, name, id, password, rrn1, rrn2) 
+values( readsq.nextval, '����', 'admin', '1234', '111111', '2222222') ;
+insert into readers(no, name, id, password, rrn1, rrn2) 
+values(readsq.nextval, 'ȫ�浿', 'hong', '5678', '333333', '4444444') ;
+commit;
+
+
+col name for  a12
+col id for a12
+col password for a12
+col rrn1 for a10
+col rrn2 for a10
+select no, name, id, password, rrn1, rrn2 from members ;
+
+
+-- ī�װ� ���̺�
+drop sequence catsaq ;
+drop table category purge ;
+
+--create sequence catsaq nocache ;
+create sequence catsaq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+
+create table gory(
+	cnum 	number primary key,
+	code 	varchar2(20) not null,
+	cname 	varchar2(50) not null
+);
+
+
+-- ��ǰ ���̺�
+drop sequence prod ;
+
+create sequence prod 
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+drop table book purge ;
+create table book(
+	pnum 		int not null primary key,
+	pname 		varchar2(50) not null,
+	pcategory_fk  	varchar2(20) not null, -- ������ ī�װ�
+	pcompany 	varchar2(50),
+	pimage   		varchar2(30),
+	pqty   int default 0,
+	price   		int default 0,
+	pspec   		varchar2(12),
+	pcontents 	varchar2(300),
+	point   		int default 0,
+	pinputdate 	varchar2(10)
+);
+
+col pname for a12
+col pcompany for a12
+col pimage for a12
+col pcontents for a12
+select * from product  ;
+
+drop sequence boardseq ;
+create sequence boardseq nocache;  
+
+-- ���� �ֹ� ���̺�
+drop sequence oldbooks ;
+
+create sequence oldbooks 
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+ 
+ 
+-- orderId(�ֹ� ���̵�) : ������ �ð��뿡 �ֹ��� ������ ������ �ֹ� ���̵� ������.
+drop table ordera purge ;
+create table ordera(
+	orderId number, -- �ֹ���ȣ(orderseq)
+	memno number, -- ȸ����ȣ
+	pnum number, -- ��ǰ��ȣ
+	qty number, -- ����
+	amount number -- ��ü����
+);
+
+drop table oldbook cascade constraints purge ;
+create table oldbook(
+	num number not null primary key,
+	writer varchar2(10) not null,
+	email varchar2(10),
+	subject varchar2(20) not null,
+	passwd varchar2(12) not null,
+	reg_date date not null,
+	readcount int default 0,
+	ref number  default 0 not null,
+	re_step number default 0 not null,
+	re_level number default 0 not null,
+	content varchar2(50) not null,
+	ip varchar2(15)  not null
+);
+
+drop sequence book_seq ;
+
+create sequence book_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+commit ;
+
+
+
